@@ -4,17 +4,12 @@ author: "Natalie Cartwright"
 format: html
 ---
 
-## Quarto
+#Context of the data
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+The measles data set is a collection of all possible cases of measles and rubella in the world from the WHO. These data is provisional data based on monthly reported data to the WHO as of June 2025. This data set includes two sections, cases divided by month and cases by year. The cases by month contains the region, country, three letter country code, year, and month of each measles and rubella case. The types of measles and rubella cases are divided into a suspected case, a clinically-compatible case, an epidemiologically-linked case and a laboratory-confirmed case. There are also variables for total cases for both measles and rubella and also discarded cases that were concluded to be non-measles or non-rubella. 
 
-## Running Code
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
 
-```{r}
-1 + 1
-```
 
 You can add options to executable code like this 
 
