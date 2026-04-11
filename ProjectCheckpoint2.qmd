@@ -24,33 +24,28 @@ cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 ### Finding the summary statistics using iteration
 
 ```{r}
-prop <- numeric(nrow(cases_year))
 max <- nrow(cases_year)
 
 for (i in 1:nrow(cases_year)) {
   lab <- cases_year$measles_lab_confirmed[i]
   epi <- cases_year$measles_epi_linked[i]
   clinic <- cases_year$measles_clinical[i]
-  tot <- cases_year$measles_total[i]
-  
+
   if (lab >= epi & lab >= clinic){
-    prop[i] = lab / tot
     max[i] = "lab"
+    
   } else if (epi >= lab & epi >= clinic) {
-    prop[i] = epi / tot
     max[i] = "epi"
+    
   } else {
-    prop[i] = clinic / tot
     max[i] = "clinic"
   }
   
-  prop[is.nan(prop)] <- 0
 }
 
+max_tbl <- tibble(method = max)
 
-prop_tbl <- tibble(proportion = prop, method = max)
-
-sum_prop <- prop_tbl |> 
+sum_prop <- max_tbl |> 
   filter(prop != 0) |> 
   group_by(method)|> 
   summarise(count = n())
