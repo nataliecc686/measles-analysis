@@ -6,7 +6,7 @@ format: html
 
 ## Checkpoint 2
 
-### Reasearch question: How many measles cases ended up being lab confirmed?
+### Reasearch question: Which method of finding measles cases finds the most measeles cases? 
 
 
 ### Loading in the data sets
@@ -21,20 +21,47 @@ cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 
 
-### Creating a function
+### Finding the summary statistics using iteration
 
 ```{r}
+prop <- numeric(nrow(cases_year))
+max <- nrow(cases_year)
 
-```
+for (i in 1:nrow(cases_year)) {
+  lab <- cases_year$measles_lab_confirmed[i]
+  epi <- cases_year$measles_epi_linked[i]
+  clinic <- cases_year$measles_clinical[i]
+  tot <- cases_year$measles_total[i]
+  
+  if (lab >= epi & lab >= clinic){
+    prop[i] = lab / tot
+    max[i] = "lab"
+  } else if (epi >= lab & epi >= clinic) {
+    prop[i] = epi / tot
+    max[i] = "epi"
+  } else {
+    prop[i] = clinic / tot
+    max[i] = "clinic"
+  }
+  
+  prop[is.nan(prop)] <- 0
+}
 
 
-### Finding the summary statistics
+prop_tbl <- tibble(proportion = prop, method = max)
 
-```{r}
+sum_prop <- prop_tbl |> 
+  filter(prop != 0) |> 
+  group_by(method)|> 
+  summarise(count = n())
 
 ```
 
 
 ### Conclusion
+
+According to my summary table, the method of confirming
+measles cases by the lab results in finding the most measles
+cases. 
 
 
