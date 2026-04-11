@@ -4,23 +4,37 @@ author: "Natalie Cartwright"
 format: html
 ---
 
-## Quarto
+## Checkpoint 2
 
-Quarto enables you to weave together content and executable code into a finished document. To learn more about Quarto see <https://quarto.org>.
+### Reasearch question: How many measles cases ended up being lab confirmed?
 
-## Running Code
 
-When you click the **Render** button a document will be generated that includes both content and the output of embedded code. You can embed code like this:
-
+### Loading in the data sets
 ```{r}
-1 + 1
+library(tidyverse)
+
+cases_month <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_month.csv')
+cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv')
+
+
 ```
 
-You can add options to executable code like this 
+
+
+### Creating a function
 
 ```{r}
-#| echo: false
-2 * 2
+
 ```
 
-The `echo: false` option disables the printing of code (only output is displayed).
+
+### Finding the summary statistics
+
+```{r}
+
+```
+
+
+### Conclusion
+
+
