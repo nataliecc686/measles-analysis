@@ -6,7 +6,7 @@ format: html
 
 ## Checkpoint 2
 
-### **Reasearch question:** Which method of finding measles cases finds the most measeles cases? 
+### **Research question:** Which method of finding measles cases finds the most measeles cases? 
 
 
 ### **Loading in the data sets**
