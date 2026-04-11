@@ -47,7 +47,7 @@ max_tbl <- tibble(method = max)
 
 sum_prop <- max_tbl |> 
   group_by(method)|> 
-  summarise(count = n())
+  summarise(count = n(), prop = n() / nrow(max_tbl))
 
 ```
 
@@ -56,6 +56,7 @@ sum_prop <- max_tbl |>
 
 According to my summary table, the method of confirming
 measles cases by the lab results in finding the most measles
-cases. 
+cases. Around 79% of cases of measles were found by confirming
+it in the lab. 
 
 
