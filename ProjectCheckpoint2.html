@@ -108,8 +108,11 @@ pre > code.sourceCode > span > a:first-child::before { text-decoration: underlin
 
 <section id="checkpoint-2" class="level2">
 <h2 class="anchored" data-anchor-id="checkpoint-2">Checkpoint 2</h2>
+<section id="reasearch-question-which-method-of-finding-measles-cases-finds-the-most-measeles-cases" class="level3">
+<h3 class="anchored" data-anchor-id="reasearch-question-which-method-of-finding-measles-cases-finds-the-most-measeles-cases"><strong>Reasearch question:</strong> Which method of finding measles cases finds the most measeles cases?</h3>
+</section>
 <section id="loading-in-the-data-sets" class="level3">
-<h3 class="anchored" data-anchor-id="loading-in-the-data-sets">Loading in the data sets</h3>
+<h3 class="anchored" data-anchor-id="loading-in-the-data-sets"><strong>Loading in the data sets</strong></h3>
 <div class="cell">
 <div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb1"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb1-1"><a href="#cb1-1" aria-hidden="true" tabindex="-1"></a><span class="fu">library</span>(tidyverse)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
 <div class="cell-output cell-output-stderr">
@@ -148,14 +151,48 @@ dbl (16): year, total_population, annualized_population_most_recent_year_onl...
 </div>
 </div>
 </section>
-<section id="creating-a-function" class="level3">
-<h3 class="anchored" data-anchor-id="creating-a-function">Creating a function</h3>
-</section>
-<section id="finding-the-summary-statistics" class="level3">
-<h3 class="anchored" data-anchor-id="finding-the-summary-statistics">Finding the summary statistics</h3>
+<section id="finding-the-summary-statistics-using-iteration" class="level3">
+<h3 class="anchored" data-anchor-id="finding-the-summary-statistics-using-iteration"><strong>Finding the summary statistics using iteration</strong></h3>
+<div class="cell">
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb7"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb7-1"><a href="#cb7-1" aria-hidden="true" tabindex="-1"></a>max <span class="ot">&lt;-</span> <span class="fu">nrow</span>(cases_year)</span>
+<span id="cb7-2"><a href="#cb7-2" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-3"><a href="#cb7-3" aria-hidden="true" tabindex="-1"></a><span class="cf">for</span> (i <span class="cf">in</span> <span class="dv">1</span><span class="sc">:</span><span class="fu">nrow</span>(cases_year)) {</span>
+<span id="cb7-4"><a href="#cb7-4" aria-hidden="true" tabindex="-1"></a>  lab <span class="ot">&lt;-</span> cases_year<span class="sc">$</span>measles_lab_confirmed[i]</span>
+<span id="cb7-5"><a href="#cb7-5" aria-hidden="true" tabindex="-1"></a>  epi <span class="ot">&lt;-</span> cases_year<span class="sc">$</span>measles_epi_linked[i]</span>
+<span id="cb7-6"><a href="#cb7-6" aria-hidden="true" tabindex="-1"></a>  clinic <span class="ot">&lt;-</span> cases_year<span class="sc">$</span>measles_clinical[i]</span>
+<span id="cb7-7"><a href="#cb7-7" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-8"><a href="#cb7-8" aria-hidden="true" tabindex="-1"></a>  <span class="cf">if</span> (lab <span class="sc">&gt;=</span> epi <span class="sc">&amp;</span> lab <span class="sc">&gt;=</span> clinic){</span>
+<span id="cb7-9"><a href="#cb7-9" aria-hidden="true" tabindex="-1"></a>    max[i] <span class="ot">&lt;-</span> <span class="st">"lab"</span></span>
+<span id="cb7-10"><a href="#cb7-10" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-11"><a href="#cb7-11" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> <span class="cf">if</span> (epi <span class="sc">&gt;=</span> lab <span class="sc">&amp;</span> epi <span class="sc">&gt;=</span> clinic) {</span>
+<span id="cb7-12"><a href="#cb7-12" aria-hidden="true" tabindex="-1"></a>    max[i] <span class="ot">&lt;-</span> <span class="st">"epi"</span></span>
+<span id="cb7-13"><a href="#cb7-13" aria-hidden="true" tabindex="-1"></a>    </span>
+<span id="cb7-14"><a href="#cb7-14" aria-hidden="true" tabindex="-1"></a>  } <span class="cf">else</span> {</span>
+<span id="cb7-15"><a href="#cb7-15" aria-hidden="true" tabindex="-1"></a>    max[i] <span class="ot">&lt;-</span> <span class="st">"clinic"</span></span>
+<span id="cb7-16"><a href="#cb7-16" aria-hidden="true" tabindex="-1"></a>  }</span>
+<span id="cb7-17"><a href="#cb7-17" aria-hidden="true" tabindex="-1"></a>  </span>
+<span id="cb7-18"><a href="#cb7-18" aria-hidden="true" tabindex="-1"></a>}</span>
+<span id="cb7-19"><a href="#cb7-19" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-20"><a href="#cb7-20" aria-hidden="true" tabindex="-1"></a>max_tbl <span class="ot">&lt;-</span> <span class="fu">tibble</span>(<span class="at">method =</span> max)</span>
+<span id="cb7-21"><a href="#cb7-21" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-22"><a href="#cb7-22" aria-hidden="true" tabindex="-1"></a>sum_prop <span class="ot">&lt;-</span> max_tbl <span class="sc">|&gt;</span> </span>
+<span id="cb7-23"><a href="#cb7-23" aria-hidden="true" tabindex="-1"></a>  <span class="fu">group_by</span>(method)<span class="sc">|&gt;</span> </span>
+<span id="cb7-24"><a href="#cb7-24" aria-hidden="true" tabindex="-1"></a>  <span class="fu">summarise</span>(<span class="at">count =</span> <span class="fu">n</span>(), <span class="at">prop =</span> <span class="fu">n</span>() <span class="sc">/</span> <span class="fu">nrow</span>(max_tbl))</span>
+<span id="cb7-25"><a href="#cb7-25" aria-hidden="true" tabindex="-1"></a></span>
+<span id="cb7-26"><a href="#cb7-26" aria-hidden="true" tabindex="-1"></a>sum_prop</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code># A tibble: 3 × 3
+  method count   prop
+  &lt;chr&gt;  &lt;int&gt;  &lt;dbl&gt;
+1 clinic   348 0.146 
+2 epi      162 0.0680
+3 lab     1872 0.786 </code></pre>
+</div>
+</div>
 </section>
 <section id="conclusion" class="level3">
-<h3 class="anchored" data-anchor-id="conclusion">Conclusion</h3>
+<h3 class="anchored" data-anchor-id="conclusion"><strong>Conclusion</strong></h3>
+<p>According to my summary table, the method of confirming measles cases by the lab results in finding the most measles cases. Around 79% of cases of measles were found by confirming it in the lab.</p>
 </section>
 </section>
 

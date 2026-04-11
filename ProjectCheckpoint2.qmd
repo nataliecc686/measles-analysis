@@ -6,11 +6,12 @@ format: html
 
 ## Checkpoint 2
 
-### Reasearch question: Which method of finding measles cases finds the most measeles cases? 
+### **Reasearch question:** Which method of finding measles cases finds the most measeles cases? 
 
 
-### Loading in the data sets
+### **Loading in the data sets**
 ```{r}
+
 library(tidyverse)
 
 cases_month <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_month.csv')
@@ -21,7 +22,7 @@ cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 
 
-### Finding the summary statistics using iteration
+### **Finding the summary statistics using iteration**
 
 ```{r}
 max <- nrow(cases_year)
@@ -49,10 +50,12 @@ sum_prop <- max_tbl |>
   group_by(method)|> 
   summarise(count = n(), prop = n() / nrow(max_tbl))
 
+sum_prop
+
 ```
 
 
-### Conclusion
+### **Conclusion**
 
 According to my summary table, the method of confirming
 measles cases by the lab results in finding the most measles
