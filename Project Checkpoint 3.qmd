@@ -15,7 +15,7 @@ library(lubridate)
 
 
 
-# API key: r28T1kQCHLHvPuqrJm8YnCgtmMyQJWiKcuYyuz9u
+## First acessing the API about air quality worldwide
 
 ```{r}
 #https://api.api-ninjas.com/v1/airquality?city=New%20York%20City&country=United%20States
@@ -36,7 +36,7 @@ us_data <- fromJSON(rawToChar(us_row$content))
 
 ```
 
-Extracting the total AQI
+## Extracting the variable total_aqi
 
 ```{r}
 us_total <- us_data$overall_aqi
@@ -44,7 +44,7 @@ us_total <- us_data$overall_aqi
 us_total
 ```
 
-Getting a city for each country
+## Creating a dataset that has a city for every country in the measles dataset
 
 ```{r}
 cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv')
@@ -70,6 +70,9 @@ country_city_tbl <- tibble(
 "Singapore","Funafuti","Ho Chi Minh City"
   ))
 ```
+
+## Creating a function to extract total_aqi for each country
+
 
 ```{r}
 get_aqi <- function(city, country){
@@ -101,9 +104,15 @@ get_aqi <- function(city, country){
   return(my_total_aqi)
   
 }
+```
 
+## Testing the function
+```{r}
 get_aqi("Zambia", "Lusaka")
 ```
+
+## Running the function over the full dataset and creating a new data frame
+
 ```{r}
 first_run <- map2(.x = country_city_df$city, .y = country_city_df$country, .f = ~get_aqi(city = .x, country = .y))
 
@@ -114,5 +123,9 @@ nrow(aqi_df)
 
 new <- cbind(country_city_df, aqi_df)
 ```
+
+## Data description
+
+
 
 
