@@ -1,0 +1,45 @@
+---
+title: "Project Checkpoint 3"
+author: "Natalie Cartwright"
+format: html
+---
+
+```{r}
+library(httr)
+library(tidyjson)
+library(jsonlite)
+library(tidyverse)
+library(glue)
+library(lubridate)
+```
+
+
+
+# API key: r28T1kQCHLHvPuqrJm8YnCgtmMyQJWiKcuYyuz9u
+
+```{r}
+#https://api.api-ninjas.com/v1/airquality?city=New%20York%20City&country=United%20States
+
+my_key = "r28T1kQCHLHvPuqrJm8YnCgtmMyQJWiKcuYyuz9u"
+
+base_url <- "https://api.api-ninjas.com/v1/airquality?"
+
+city <- "city=New%20York%20City"
+country <- "country=United%20States"
+
+us_url <- glue("{base_url}{city}&{country}")
+
+
+us_row <- GET(us_url, add_headers("X-Api-Key" = my_key))
+
+us_data <- fromJSON(rawToChar(us_row$content))
+
+```
+
+
+```{r}
+us_total <- us_data$overall_aqi
+
+us_total
+```
+
