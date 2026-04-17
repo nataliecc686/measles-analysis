@@ -4,6 +4,8 @@ author: "Natalie Cartwright"
 format: html
 ---
 
+## Loading in packages and datasets
+
 ```{r}
 library(httr)
 library(tidyjson)
@@ -11,6 +13,8 @@ library(jsonlite)
 library(tidyverse)
 library(glue)
 library(lubridate)
+
+cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv')
 ```
 
 
@@ -36,7 +40,7 @@ us_data <- fromJSON(rawToChar(us_row$content))
 
 ```
 
-## Extracting the variable total_aqi
+## Extracting the variable total_aqi to get the total air quality index for each country
 
 ```{r}
 us_total <- us_data$overall_aqi
@@ -47,8 +51,6 @@ us_total
 ## Creating a dataset that has a city for every country in the measles dataset
 
 ```{r}
-cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv')
-
 cases_year$country[cases_year$year == "2025"]
 
 country_city_tbl <- tibble(
@@ -126,6 +128,6 @@ new <- cbind(country_city_df, aqi_df)
 
 ## Data description
 
-
+This is a data set that contains every total Air Quality Index by city and country. 
 
 
