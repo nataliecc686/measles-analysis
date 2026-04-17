@@ -124,6 +124,7 @@ nrow(country_city_tbl)
 nrow(aqi_df)
 
 new <- cbind(country_city_tbl, aqi_df)
+new
 ```
 
 ## Data description

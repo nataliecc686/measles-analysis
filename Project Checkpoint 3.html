@@ -446,7 +446,348 @@ dbl (16): year, total_population, annualized_population_most_recent_year_onl...
 <div class="cell-output cell-output-stdout">
 <pre><code>[1] 168</code></pre>
 </div>
-<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>new <span class="ot">&lt;-</span> <span class="fu">cbind</span>(country_city_tbl, aqi_df)</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="code-copy-outer-scaffold"><div class="sourceCode cell-code" id="cb25"><pre class="sourceCode r code-with-copy"><code class="sourceCode r"><span id="cb25-1"><a href="#cb25-1" aria-hidden="true" tabindex="-1"></a>new <span class="ot">&lt;-</span> <span class="fu">cbind</span>(country_city_tbl, aqi_df)</span>
+<span id="cb25-2"><a href="#cb25-2" aria-hidden="true" tabindex="-1"></a>new</span></code></pre></div><button title="Copy to Clipboard" class="code-copy-button"><i class="bi"></i></button></div>
+<div class="cell-output cell-output-stdout">
+<pre><code>                                                 country                city
+1                                                Algeria             Algiers
+2                                                  Benin             Cotonou
+3                                               Botswana            Gaborone
+4                                           Burkina Faso         Ouagadougou
+5                                                Burundi           Bujumbura
+6                                               Cameroon              Douala
+7                               Central African Republic              Bangui
+8                                                   Chad           N'Djamena
+9                                                Comoros              Moroni
+10                                                 Congo         Brazzaville
+11                                         Côte d'Ivoire             Abidjan
+12                      Democratic Republic of the Congo            Kinshasa
+13                                     Equatorial Guinea              Malabo
+14                                              Eswatini             Mbabane
+15                                              Ethiopia         Addis Ababa
+16                                                 Gabon          Libreville
+17                                                Gambia              Banjul
+18                                                 Ghana               Accra
+19                                                Guinea             Conakry
+20                                         Guinea-Bissau              Bissau
+21                                                 Kenya             Nairobi
+22                                               Lesotho              Maseru
+23                                               Liberia            Monrovia
+24                                            Madagascar        Antananarivo
+25                                                Malawi            Lilongwe
+26                                                  Mali              Bamako
+27                                            Mauritania          Nouakchott
+28                                            Mozambique              Maputo
+29                                               Namibia            Windhoek
+30                                                 Niger              Niamey
+31                                               Nigeria               Lagos
+32                                                Rwanda              Kigali
+33                                               Senegal               Dakar
+34                                          Sierra Leone            Freetown
+35                                          South Africa        Johannesburg
+36                                           South Sudan                Juba
+37                                                  Togo                Lomé
+38                                                Uganda             Kampala
+39                           United Republic of Tanzania       Dar es Salaam
+40                                                Zambia              Lusaka
+41                                              Zimbabwe              Harare
+42                                   Antigua and Barbuda          St. John's
+43                                             Argentina        Buenos Aires
+44                                               Bahamas              Nassau
+45                                              Barbados          Bridgetown
+46                                                Belize         Belize City
+47                      Bolivia (Plurinational State of)          Santa Cruz
+48                                                Brazil           São Paulo
+49                                                Canada             Toronto
+50                                                 Chile            Santiago
+51                                              Colombia              Bogotá
+52                                            Costa Rica            San José
+53                                                  Cuba              Havana
+54                                    Dominican Republic       Santo Domingo
+55                                               Ecuador           Guayaquil
+56                                           El Salvador        San Salvador
+57                                             Guatemala      Guatemala City
+58                                                Guyana          Georgetown
+59                                                 Haiti      Port-au-Prince
+60                                              Honduras         Tegucigalpa
+61                                               Jamaica            Kingston
+62                                                Mexico         Mexico City
+63                                             Nicaragua             Managua
+64                                                Panama         Panama City
+65                                                  Peru                Lima
+66                                           Saint Lucia            Castries
+67                      Saint Vincent and the Grenadines           Kingstown
+68                                   Trinidad and Tobago       Port of Spain
+69                              United States of America            New York
+70                                           Afghanistan               Kabul
+71                                               Bahrain              Manama
+72                                              Djibouti            Djibouti
+73                            Iran (Islamic Republic of)              Tehran
+74                                                  Iraq             Baghdad
+75                                                Jordan               Amman
+76                                                Kuwait         Kuwait City
+77                                               Lebanon              Beirut
+78                                                 Libya             Tripoli
+79                                               Morocco          Casablanca
+80                                                  Oman              Muscat
+81                                              Pakistan             Karachi
+82                                                 Qatar                Doha
+83                                          Saudi Arabia              Riyadh
+84                                               Somalia           Mogadishu
+85                                                 Sudan            Khartoum
+86                                  Syrian Arab Republic            Damascus
+87                                               Tunisia               Tunis
+88                                  United Arab Emirates               Dubai
+89                                                 Yemen              Sana'a
+90                                               Albania              Tirana
+91                                               Armenia             Yerevan
+92                                               Austria              Vienna
+93                                            Azerbaijan                Baku
+94                                               Belarus               Minsk
+95                                               Belgium            Brussels
+96                                Bosnia and Herzegovina            Sarajevo
+97                                              Bulgaria               Sofia
+98                                               Croatia              Zagreb
+99                                                Cyprus             Nicosia
+100                                              Czechia              Prague
+101                                              Denmark          Copenhagen
+102                                              Estonia             Tallinn
+103                                              Finland            Helsinki
+104                                               France               Paris
+105                                              Georgia             Tbilisi
+106                                              Germany              Berlin
+107                                               Greece              Athens
+108                                              Hungary            Budapest
+109                                              Ireland              Dublin
+110                                               Israel            Tel Aviv
+111                                                Italy                Rome
+112                                           Kazakhstan              Almaty
+113                                           Kyrgyzstan             Bishkek
+114                                            Lithuania             Vilnius
+115                                           Luxembourg          Luxembourg
+116                                           Montenegro           Podgorica
+117                         Netherlands (Kingdom of the)           Amsterdam
+118                                               Norway                Oslo
+119                                               Poland              Warsaw
+120                                             Portugal              Lisbon
+121                                  Republic of Moldova            Chișinău
+122                                              Romania           Bucharest
+123                                   Russian Federation              Moscow
+124                                               Serbia            Belgrade
+125                                             Slovakia          Bratislava
+126                                             Slovenia           Ljubljana
+127                                                Spain              Madrid
+128                                               Sweden           Stockholm
+129                                          Switzerland              Zurich
+130                                           Tajikistan            Dushanbe
+131                                              Türkiye            Istanbul
+132                                         Turkmenistan            Ashgabat
+133                                              Ukraine                Kyiv
+134 United Kingdom of Great Britain and Northern Ireland              London
+135                                           Uzbekistan            Tashkent
+136                                           Bangladesh               Dhaka
+137                                               Bhutan             Thimphu
+138                Democratic People's Republic of Korea           Pyongyang
+139                                                India              Mumbai
+140                                            Indonesia             Jakarta
+141                                             Maldives                Malé
+142                                              Myanmar              Yangon
+143                                                Nepal           Kathmandu
+144                                            Sri Lanka             Colombo
+145                                             Thailand             Bangkok
+146                                          Timor-Leste                Dili
+147                                            Australia              Sydney
+148                                    Brunei Darussalam Bandar Seri Begawan
+149                                             Cambodia          Phnom Penh
+150                                                China            Shanghai
+151                                         Cook Islands              Avarua
+152                                                 Fiji                Suva
+153                                                Japan               Tokyo
+154                                             Kiribati              Tarawa
+155                     Lao People's Democratic Republic           Vientiane
+156                                             Malaysia        Kuala Lumpur
+157                                     Marshall Islands              Majuro
+158                     Micronesia (Federated States of)             Palikir
+159                                             Mongolia         Ulaanbaatar
+160                                                Nauru               Yaren
+161                                          New Zealand            Auckland
+162                                                 Niue               Alofi
+163                                                Palau           Ngerulmud
+164                                          Philippines              Manila
+165                                    Republic of Korea               Seoul
+166                                            Singapore           Singapore
+167                                               Tuvalu            Funafuti
+168                                             Viet Nam    Ho Chi Minh City
+    total_aqi
+1          67
+2          12
+3          29
+4         116
+5          13
+6          11
+7           3
+8          55
+9          21
+10          9
+11         13
+12          9
+13         12
+14         46
+15         66
+16         13
+17        112
+18         13
+19        164
+20        155
+21         23
+22         44
+23         22
+24         22
+25          8
+26        137
+27        154
+28         29
+29         59
+30         NA
+31         11
+32         51
+33        107
+34        109
+35         47
+36         18
+37         12
+38         28
+39          3
+40         17
+41         23
+42         35
+43         23
+44         48
+45         32
+46         48
+47        134
+48         21
+49         47
+50         86
+51         66
+52         33
+53        120
+54         42
+55         23
+56         90
+57         69
+58         18
+59         41
+60         68
+61         56
+62         97
+63         56
+64         39
+65         32
+66         31
+67         27
+68         22
+69        169
+70         46
+71        149
+72         40
+73        119
+74        123
+75         89
+76        133
+77        103
+78        124
+79         78
+80        152
+81        141
+82        171
+83        166
+84         18
+85         74
+86         49
+87        129
+88        178
+89         50
+90        103
+91        178
+92         28
+93        181
+94        107
+95         31
+96         84
+97         30
+98         81
+99        201
+100        40
+101        63
+102        42
+103        68
+104        37
+105       150
+106        41
+107       180
+108        77
+109       152
+110       126
+111       128
+112       110
+113       132
+114       120
+115        34
+116       118
+117        54
+118        48
+119        37
+120       147
+121        46
+122        32
+123        70
+124        39
+125        34
+126       152
+127        38
+128        49
+129        93
+130       147
+131        47
+132        52
+133        44
+134        36
+135        75
+136        44
+137       115
+138       201
+139        94
+140        80
+141        21
+142        51
+143       111
+144        21
+145        56
+146        33
+147        42
+148        32
+149        40
+150       152
+151        32
+152        36
+153       202
+154         6
+155       127
+156        24
+157         6
+158        13
+159       151
+160         7
+161        40
+162        29
+163        62
+164       200
+165        NA
+166        23
+167         6
+168        47</code></pre>
+</div>
 </div>
 </section>
 <section id="data-description" class="level2">
