@@ -108,26 +108,28 @@ get_aqi <- function(city, country){
 }
 ```
 
-## Testing the function
+## Testing the function on Algiers, Algeria
 ```{r}
-get_aqi("Zambia", "Lusaka")
+get_aqi("Algiers", "Algeria")
 ```
 
 ## Running the function over the full dataset and creating a new data frame
 
 ```{r}
-first_run <- map2(.x = country_city_df$city, .y = country_city_df$country, .f = ~get_aqi(city = .x, country = .y))
+first_run <- map2(.x = country_city_tbl$city, .y = country_city_tbl$country, .f = ~get_aqi(city = .x, country = .y))
 
 aqi_df <- data.frame(total_aqi = unlist(first_run))
 
-nrow(country_city_df)
+nrow(country_city_tbl)
 nrow(aqi_df)
 
-new <- cbind(country_city_df, aqi_df)
+new <- cbind(country_city_tbl, aqi_df)
 ```
 
 ## Data description
 
-This is a data set that contains every total Air Quality Index by city and country. 
+This is a data frame that contains every total Air Quality Index by city and
+country in the year 2025. There are 168 rows for the 168 countries in the measles
+data but two cities have no data: Niamey, Niger and Seoul, Republic of Korea. 
 
 
