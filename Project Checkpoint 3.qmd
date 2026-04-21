@@ -1,10 +1,167 @@
 ---
-title: "Project Checkpoint 3"
-author: "Natalie Cartwright"
+title: "checkpoint 3"
+author: Amanda Dong, Zita Tam, Natalie Carthwright, Aryan Nair
 format: html
 ---
 
-## Loading in packages and datasets
+## Country GDP API
+Setting my API ninja key!! (code hidden)
+
+```{r}
+#| echo: false
+my_key = "r28T1kQCHLHvPuqrJm8YnCgtmMyQJWiKcuYyuz9u"
+```
+
+load in packages and dataset:
+```{r}
+#| label: packages-setup
+#| message: false
+#| warning: false
+library(httr)
+library(tidyjson)
+library(jsonlite)
+library(tidyverse)
+library(stringr)
+cases_month <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_month.csv')
+cases_year <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv')
+```
+
+**Example with Canada 2026**
+
+To start, I am going to use the API to access the GDP data for Canada in 2026.
+```{r}
+base_url <- "https://api.api-ninjas.com/v1/gdp"
+country <- "Canada"
+year <- "2026"
+url <- str_c(base_url, "?country=", country, "&year=", year)
+canada_raw <- GET(url, add_headers("X-Api-Key" = my_key))
+```
+
+We now have the raw data, so I will change it into JSON format and parse in to a tidy dataframe.
+```{r}
+canada_data <- rawToChar(canada_raw$content)
+canada_tidy <- fromJSON(canada_data)
+canada_final <- canada_tidy %>% select(country, year, gdp_per_capita_nominal)
+```
+
+
+**Writing function**
+
+Next, using the methods we used for Canada as a blueprint, I'll create a function to get the data for all countries.
+```{r}
+get_gdp_data <- function(country, year, key = my_key) {
+  if (is.na(country) || is.na(year)) {
+    return(NULL)
+  }
+
+  country <- str_replace_all(country, " ", "%20")
+  base_url <- "https://api.api-ninjas.com/v1/gdp"
+  url <- str_c(base_url, "?country=", country, "&year=", year)
+  raw_data <- GET(url, add_headers("X-Api-Key" = my_key))
+  json_data <- rawToChar(raw_data$content)
+  tidy_data <- fromJSON(json_data)
+  if (!is.data.frame(tidy_data) || nrow(tidy_data) == 0) {
+    return(NULL)
+  }
+  if (!"gdp_per_capita_nominal" %in% names(tidy_data) || 
+      is.na(tidy_data$gdp_per_capita_nominal)) {
+    return(tibble(
+      country = country,
+      year = year,
+      gdp_per_capita_nominal = NA
+    ))
+  }
+  gdps <- tidy_data %>% select(country, year, gdp_per_capita_nominal)
+}
+
+```
+
+Let's test the function using USA in 2019.
+```{r}
+get_gdp_data("United States", "2019")
+get_gdp_data("hello", "yes")
+```
+
+Now we need to apply the function to all countries and years in our measles data.
+```{r}
+#| eval: false
+apply_data <- cases_year %>% select(country, year) %>%
+  filter(!is.na(country)) %>% filter(!is.na(year))
+
+# results1 <- map2_dfr(.x = apply_data$country[1:500], .y = apply_data$year[1:500], .f = get_gdp_data)
+# results2 <- map2_dfr(.x = apply_data$country[501:1000], .y = apply_data$year[501:1000], .f = get_gdp_data)
+# results3 <- map2_dfr(.x = apply_data$country[1001:1500], .y = apply_data$year[1001:1500], .f = get_gdp_data)
+# results4 <- map2_dfr(.x = apply_data$country[1501:2000], .y = apply_data$year[1501:2000], .f = get_gdp_data)
+# results5 <- map2_dfr(.x = apply_data$country[2001:2380], .y = apply_data$year[2001:2380], .f = get_gdp_data)
+
+results1$country_full <- countrycode(results1$country, origin = "iso3c", destination = "country.name")
+results2$country_full <- countrycode(results2$country, origin = "iso3c", destination = "country.name")
+results3$country_full <- countrycode(results3$country, origin = "iso3c", destination = "country.name")
+results3[98, 4] <- "Pakistan"
+results4$country_full <- countrycode(results4$country, origin = "iso3c", destination = "country.name")
+results4[101:110, 4] <- "Montenegro"
+results5$country_full <- countrycode(results5$country, origin = "iso3c", destination = "country.name")
+
+GDP_APIdata <- bind_rows(results1, results2, results3, results4, results5)
+
+# saving to CSV for future use
+write.csv(GDP_APIdata, "GDPdata.csv", row.names = FALSE)
+```
+
+```{r}
+GDP_APIdata <- read.csv("GDPdata.csv")
+head(GDP_APIdata)
+```
+
+**Brief description of new dataset**
+
+We now have a new dataframe (which I've named "GDP_APIdata") which contains 2194 rows with 4 variables. The 2194 rows correlate to the rows in "cases_year" (our original measles dataset) that have both country and year data. 3 of the variables in our new dataframe are country (as both full names and abbreviated) and year, while the last variable is "gdp_per_capita_nominal". As the name suggests, this column contains the nominal GDP per capita for that country, in that year. For any country and year that did not have its nominal GDP per capita data available, their value is NA. All data was taken from API Ninja's dataset.
+
+#### Join the datasets
+
+```{r}
+meta_df <- cases_year |>
+  left_join(GDP_APIdata, by = c("iso3" = "country", "year" = "year"))
+```
+
+#### Research Question: How does the relationship between GDP per capita and measles incidence rate change before and after COVID?
+
+```{r}
+#| message: false
+meta_df |>
+  mutate(
+    time_period = case_when(
+      year >= 2015 & year <= 2019 ~ "Pre-COVID (2015-2019)",
+      year >= 2020 & year <= 2023 ~ "Post-COVID (2020-2023)"),
+      time_period = factor(time_period, levels = c("Pre-COVID (2015-2019)", "Post-COVID (2020-2023)"))) |>
+  filter(!is.na(time_period)) |>
+  group_by(iso3, country_full, region, time_period) |>
+  summarize(
+    avg_incidence = mean(measles_incidence_rate_per_1000000_total_population, na.rm = TRUE),
+    avg_gdp = mean(gdp_per_capita_nominal, na.rm = TRUE)) |>
+  filter(!is.na(avg_incidence), !is.na(avg_gdp), 
+         avg_incidence < 500, avg_gdp > 0) |> #removed extreme outliers to observe differences
+  ggplot(aes(x = avg_gdp, y = avg_incidence, color = region)) +
+  geom_point(alpha = 0.5, size = 2) +
+  facet_wrap(~time_period) +
+  labs(
+    title = "Pre-COVID and Post-COVID Periods vs GDP",
+    x = "Average GDP per Capita",
+    y = "Average Measles \nIncidence per Million",
+    color = "WHO Region") +
+  theme_minimal() +
+  theme(plot.title = element_text(hjust = 0),
+        plot.title.position = "plot",
+        axis.text.x = element_text(angle = 45, hjust = 1),
+        axis.title.y = element_text(angle = 0, vjust = 0.5),
+        panel.grid.minor = element_blank(),
+        legend.position = "top",
+        legend.title = element_text(face = "bold")
+        )
+```
+
+## Air Quality API
+Loading in packages and datasets
 
 ```{r}
 library(httr)
@@ -23,8 +180,6 @@ cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytu
 
 ```{r}
 #https://api.api-ninjas.com/v1/airquality?city=New%20York%20City&country=United%20States
-
-my_key = "r28T1kQCHLHvPuqrJm8YnCgtmMyQJWiKcuYyuz9u"
 
 base_url <- "https://api.api-ninjas.com/v1/airquality?"
 
@@ -51,6 +206,7 @@ us_total
 ## Creating a dataset that has a city for every country in the measles dataset
 
 ```{r}
+#| results: hide
 cases_year$country[cases_year$year == "2025"]
 
 country_city_tbl <- tibble(
@@ -116,6 +272,7 @@ get_aqi("Algiers", "Algeria")
 ## Running the function over the full dataset and creating a new data frame
 
 ```{r}
+#| eval: false
 first_run <- map2(.x = country_city_tbl$city, .y = country_city_tbl$country, .f = ~get_aqi(city = .x, country = .y))
 
 aqi_df <- data.frame(total_aqi = unlist(first_run))
@@ -137,4 +294,39 @@ This is a data frame that contains every total Air Quality Index by city and
 country in the year 2025. There are 168 rows for the 168 countries in the measles
 data but two cities have no data: Niamey, Niger and Seoul, Republic of Korea. 
 
+## Meta Dataset ##
 
+```{r}
+new <- read.csv("new.csv")
+results_clean <- GDP_APIdata %>%
+  select(country = country_full, year, gdp_per_capita_nominal)
+
+meta_df <- cases_year %>%
+  left_join(new, by = "country") %>%
+  left_join(results_clean, by = c("country", "year"))
+
+head(meta_df)
+```
+
+## Visualization: Average AQI vs. Average Measles Cases by Country (2020–2025) ##
+
+```{r}
+#| message: false
+#| warning: false
+names(meta_df)
+meta_df %>%
+  filter(!is.na(total_aqi), !is.na(total_suspected_measles_rubella_cases)) %>%
+  group_by(country, total_aqi) %>%
+  summarise(avg_cases = mean(total_suspected_measles_rubella_cases, na.rm = TRUE)) %>%
+  ggplot(aes(x = total_aqi, y = avg_cases)) +
+  geom_point(alpha = 0.6, color = "dodgerblue") +
+  geom_smooth(method = "lm", se = TRUE, color = "red") +
+  scale_y_log10(labels = scales::comma) +
+  labs(
+    title = "Air Quality Index vs. Average Measles Cases by Country",
+    subtitle = "Each point represents one country; cases shown on log scale",
+    x = "Air Quality Index (higher = worse air quality)",
+    y = "Average Annual Measles Cases (log scale)",
+    caption = "Sources: API Ninjas AQI data; TidyTuesday measles dataset"
+  )
+```
