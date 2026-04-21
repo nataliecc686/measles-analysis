@@ -1,0 +1,169 @@
+"","country","city","total_aqi"
+"1","Algeria","Algiers",49
+"2","Benin","Cotonou",13
+"3","Botswana","Gaborone",23
+"4","Burkina Faso","Ouagadougou",41
+"5","Burundi","Bujumbura",8
+"6","Cameroon","Douala",15
+"7","Central African Republic","Bangui",3
+"8","Chad","N'Djamena",135
+"9","Comoros","Moroni",20
+"10","Congo","Brazzaville",10
+"11","Côte d'Ivoire","Abidjan",13
+"12","Democratic Republic of the Congo","Kinshasa",10
+"13","Equatorial Guinea","Malabo",15
+"14","Eswatini","Mbabane",30
+"15","Ethiopia","Addis Ababa",53
+"16","Gabon","Libreville",22
+"17","Gambia","Banjul",103
+"18","Ghana","Accra",14
+"19","Guinea","Conakry",147
+"20","Guinea-Bissau","Bissau",128
+"21","Kenya","Nairobi",14
+"22","Lesotho","Maseru",19
+"23","Liberia","Monrovia",26
+"24","Madagascar","Antananarivo",8
+"25","Malawi","Lilongwe",13
+"26","Mali","Bamako",60
+"27","Mauritania","Nouakchott",89
+"28","Mozambique","Maputo",38
+"29","Namibia","Windhoek",34
+"30","Niger","Niamey",NA
+"31","Nigeria","Lagos",13
+"32","Rwanda","Kigali",58
+"33","Senegal","Dakar",83
+"34","Sierra Leone","Freetown",118
+"35","South Africa","Johannesburg",35
+"36","South Sudan","Juba",8
+"37","Togo","Lomé",13
+"38","Uganda","Kampala",16
+"39","United Republic of Tanzania","Dar es Salaam",6
+"40","Zambia","Lusaka",13
+"41","Zimbabwe","Harare",17
+"42","Antigua and Barbuda","St. John's",78
+"43","Argentina","Buenos Aires",31
+"44","Bahamas","Nassau",81
+"45","Barbados","Bridgetown",42
+"46","Belize","Belize City",33
+"47","Bolivia (Plurinational State of)","Santa Cruz",136
+"48","Brazil","São Paulo",23
+"49","Canada","Toronto",182
+"50","Chile","Santiago",30
+"51","Colombia","Bogotá",81
+"52","Costa Rica","San José",33
+"53","Cuba","Havana",58
+"54","Dominican Republic","Santo Domingo",48
+"55","Ecuador","Guayaquil",30
+"56","El Salvador","San Salvador",64
+"57","Guatemala","Guatemala City",89
+"58","Guyana","Georgetown",21
+"59","Haiti","Port-au-Prince",43
+"60","Honduras","Tegucigalpa",57
+"61","Jamaica","Kingston",40
+"62","Mexico","Mexico City",98
+"63","Nicaragua","Managua",32
+"64","Panama","Panama City",40
+"65","Peru","Lima",34
+"66","Saint Lucia","Castries",44
+"67","Saint Vincent and the Grenadines","Kingstown",44
+"68","Trinidad and Tobago","Port of Spain",30
+"69","United States of America","New York",200
+"70","Afghanistan","Kabul",45
+"71","Bahrain","Manama",76
+"72","Djibouti","Djibouti",31
+"73","Iran (Islamic Republic of)","Tehran",54
+"74","Iraq","Baghdad",116
+"75","Jordan","Amman",134
+"76","Kuwait","Kuwait City",80
+"77","Lebanon","Beirut",184
+"78","Libya","Tripoli",141
+"79","Morocco","Casablanca",102
+"80","Oman","Muscat",85
+"81","Pakistan","Karachi",83
+"82","Qatar","Doha",114
+"83","Saudi Arabia","Riyadh",132
+"84","Somalia","Mogadishu",19
+"85","Sudan","Khartoum",156
+"86","Syrian Arab Republic","Damascus",32
+"87","Tunisia","Tunis",57
+"88","United Arab Emirates","Dubai",141
+"89","Yemen","Sana'a",57
+"90","Albania","Tirana",160
+"91","Armenia","Yerevan",37
+"92","Austria","Vienna",45
+"93","Azerbaijan","Baku",151
+"94","Belarus","Minsk",73
+"95","Belgium","Brussels",55
+"96","Bosnia and Herzegovina","Sarajevo",166
+"97","Bulgaria","Sofia",64
+"98","Croatia","Zagreb",87
+"99","Cyprus","Nicosia",199
+"100","Czechia","Prague",95
+"101","Denmark","Copenhagen",195
+"102","Estonia","Tallinn",109
+"103","Finland","Helsinki",74
+"104","France","Paris",147
+"105","Georgia","Tbilisi",42
+"106","Germany","Berlin",68
+"107","Greece","Athens",151
+"108","Hungary","Budapest",52
+"109","Ireland","Dublin",145
+"110","Israel","Tel Aviv",121
+"111","Italy","Rome",160
+"112","Kazakhstan","Almaty",128
+"113","Kyrgyzstan","Bishkek",151
+"114","Lithuania","Vilnius",101
+"115","Luxembourg","Luxembourg",121
+"116","Montenegro","Podgorica",154
+"117","Netherlands (Kingdom of the)","Amsterdam",105
+"118","Norway","Oslo",141
+"119","Poland","Warsaw",42
+"120","Portugal","Lisbon",200
+"121","Republic of Moldova","Chișinău",100
+"122","Romania","Bucharest",122
+"123","Russian Federation","Moscow",140
+"124","Serbia","Belgrade",48
+"125","Slovakia","Bratislava",65
+"126","Slovenia","Ljubljana",90
+"127","Spain","Madrid",57
+"128","Sweden","Stockholm",132
+"129","Switzerland","Zurich",79
+"130","Tajikistan","Dushanbe",49
+"131","Türkiye","Istanbul",33
+"132","Turkmenistan","Ashgabat",47
+"133","Ukraine","Kyiv",112
+"134","United Kingdom of Great Britain and Northern Ireland","London",154
+"135","Uzbekistan","Tashkent",160
+"136","Bangladesh","Dhaka",55
+"137","Bhutan","Thimphu",75
+"138","Democratic People's Republic of Korea","Pyongyang",178
+"139","India","Mumbai",99
+"140","Indonesia","Jakarta",35
+"141","Maldives","Malé",12
+"142","Myanmar","Yangon",62
+"143","Nepal","Kathmandu",156
+"144","Sri Lanka","Colombo",13
+"145","Thailand","Bangkok",61
+"146","Timor-Leste","Dili",16
+"147","Australia","Sydney",41
+"148","Brunei Darussalam","Bandar Seri Begawan",11
+"149","Cambodia","Phnom Penh",60
+"150","China","Shanghai",101
+"151","Cook Islands","Avarua",25
+"152","Fiji","Suva",15
+"153","Japan","Tokyo",169
+"154","Kiribati","Tarawa",7
+"155","Lao People's Democratic Republic","Vientiane",114
+"156","Malaysia","Kuala Lumpur",22
+"157","Marshall Islands","Majuro",4
+"158","Micronesia (Federated States of)","Palikir",6
+"159","Mongolia","Ulaanbaatar",137
+"160","Nauru","Yaren",5
+"161","New Zealand","Auckland",46
+"162","Niue","Alofi",20
+"163","Palau","Ngerulmud",35
+"164","Philippines","Manila",49
+"165","Republic of Korea","Seoul",NA
+"166","Singapore","Singapore",12
+"167","Tuvalu","Funafuti",6
+"168","Viet Nam","Ho Chi Minh City",45

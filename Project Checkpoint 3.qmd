@@ -125,6 +125,10 @@ nrow(aqi_df)
 
 new <- cbind(country_city_tbl, aqi_df)
 new
+
+write.csv(new, "new.csv")
+
+
 ```
 
 ## Data description
