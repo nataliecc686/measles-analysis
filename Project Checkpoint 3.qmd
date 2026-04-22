@@ -2,6 +2,9 @@
 title: "checkpoint 3"
 author: Amanda Dong, Zita Tam, Natalie Carthwright, Aryan Nair
 format: html
+embed-resources: true
+code-fold: true
+theme: cosmo
 ---
 
 ## Country GDP API
