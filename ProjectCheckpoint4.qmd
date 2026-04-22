@@ -1,0 +1,41 @@
+---
+title: "ProjectCheckpoint4"
+author: "Natalie Cartwright"
+format: html
+---
+
+```{r}
+library(tidyverse)
+library(gt)
+
+cases_month <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_month.csv')
+cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv')
+```
+
+
+```{r}
+
+summary_table <- cases_year %>%
+  mutate(
+    prop_lab = measles_lab_confirmed / measles_total,
+    prop_epi = measles_epi_linked / measles_total,
+    prop_clinic = measles_clinical / measles_total
+  ) %>%
+  mutate(
+    across(starts_with("prop_"), ~ ifelse(is.nan(.), 0, .)),
+    max_method = case_when(
+      prop_lab >= prop_epi & prop_lab >= prop_clinic ~ "lab",
+      prop_epi >= prop_lab & prop_epi >= prop_clinic ~ "epi",
+      TRUE ~ "clinical"
+    ),
+    max_prop = pmax(prop_lab, prop_epi, prop_clinic, na.rm = TRUE)
+  ) %>%
+  select(year, prop_lab, prop_epi, prop_clinic, max_method, max_prop)
+
+# Combine everything
+
+
+
+
+
+```

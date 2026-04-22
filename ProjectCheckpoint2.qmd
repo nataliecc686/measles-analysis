@@ -71,7 +71,6 @@ summary_table <- cases_year %>%
   select(year, prop_lab, prop_epi, prop_clinic, max_method, max_prop)
 
 
-
 ```
 
 ### **Conclusion**
