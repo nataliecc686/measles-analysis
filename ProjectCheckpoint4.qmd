@@ -7,10 +7,18 @@ format: html
 ```{r}
 library(tidyverse)
 library(gt)
+library(dplyr)
+
 
 cases_month <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_month.csv')
 cases_year <- read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv')
 ```
+
+Research Question: Does the method of finding measles cases differ according to the year. 
+
+
+
+Data summary
 
 
 ```{r}
@@ -32,10 +40,37 @@ summary_table <- cases_year %>%
   ) %>%
   select(year, prop_lab, prop_epi, prop_clinic, max_method, max_prop)
 
-# Combine everything
 
-
-
+head(summary_table)
 
 
 ```
+
+
+Visualization
+
+```{r}
+
+summary_long <- summary_table %>%
+  pivot_longer(cols = starts_with("prop_"),
+               names_to = "method",
+               values_to = "proportion")
+
+ggplot(summary_long, aes(x = year, y = proportion, color = method)) +
+  geom_line() +
+  geom_point(size = 2) +
+  scale_y_continuous(labels = scales::percent) +
+  labs(
+    title = "Proportion by Method Over Time",
+    x = "Year",
+    y = "Proportion",
+    color = "Method"
+  ) +
+  theme_minimal()
+
+```
+
+
+
+
+
