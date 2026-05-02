@@ -1,0 +1,106 @@
+---
+title: "Final Deliverable"
+author: "Natalie Cartwright"
+format: html
+---
+
+---
+title: "Project Deliverable"
+author: "Natalie Cartwright"
+format: html
+---
+
+
+
+
+```{r}
+library(tidyverse)
+library(paletteer)
+library(gt)
+library(stringr)
+cases_month <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_month.csv')
+cases_year <- readr::read_csv('https://raw.githubusercontent.com/rfordatascience/tidytuesday/main/data/2025/2025-06-24/cases_year.csv')
+meta_df <- read_csv("metadf.csv")
+```
+
+
+
+
+```{r}
+check_vars <- c("measles_clinical", "measles_total", 
+                "measles_epi_linked", "measles_lab_confirmed")
+
+propsbyyear <- cases_year %>%
+  filter(if_all(all_of(check_vars), ~ !is.na(.x))) %>%
+  group_by(year) %>%
+  summarise(clin_prop = sum(measles_clinical) / sum(measles_total),
+            epi_prop  = sum(measles_epi_linked) / sum(measles_total),
+            lab_prop  = sum(measles_lab_confirmed) / sum(measles_total),
+            .groups   = "drop")
+
+plot_long <- propsbyyear %>%
+  pivot_longer(cols = c(clin_prop, epi_prop, lab_prop),
+               names_to  = "method",
+               values_to = "proportion")
+```
+
+```{r}
+
+propsbyyear %>%
+  mutate(
+    dominant_method = case_when(
+      clin_prop == pmax(clin_prop, epi_prop, lab_prop) ~ "Clinical",
+      epi_prop  == pmax(clin_prop, epi_prop, lab_prop) ~ "Epi-linked",
+      lab_prop  == pmax(clin_prop, epi_prop, lab_prop) ~ "Lab-confirmed"
+    )
+  ) %>%
+  gt() %>%
+  cols_label(
+    year             = "Year",
+    clin_prop        = "Clinical",
+    epi_prop         = "Epi-linked",
+    lab_prop         = "Lab-confirmed",
+    dominant_method  = "Dominant Method"
+  ) %>%
+  fmt_percent(
+    columns = c(clin_prop, epi_prop, lab_prop),
+    decimals = 1
+  ) %>%
+  tab_spanner(
+    label   = "Proportion of Cases by Detection Method",
+    columns = c(clin_prop, epi_prop, lab_prop)
+  ) %>%
+  tab_header(
+    title    = "Measles Case Detection Methods by Year",
+    subtitle = "Does detection method differ by year?"
+  ) %>%
+  tab_style(
+    style     = cell_fill(color = "lightblue"),
+    locations = cells_body(columns = dominant_method)
+  ) %>%
+  tab_style(
+    style = cell_text(weight = "bold"),
+    locations = cells_column_labels() 
+  ) %>% 
+  tab_style(
+    style = cell_fill(color = "lightyellow"), 
+    locations = cells_body(columns = year)
+  )
+```
+
+```{r}
+ggplot(plot_long, aes(x = year, y = proportion, fill = method)) +
+  geom_bar(position = "fill", stat = "identity") +
+  scale_x_continuous(breaks = plot_long$year) +
+  theme_minimal() +
+  theme(axis.text.x = element_text(size = 8)) +
+  labs(title = "Measles Detection Method by Year",
+       subtitle = "Clinical vs. Epi-linked vs. Lab Cases") +
+  xlab("Year") +
+  ylab("Proportion") +
+  scale_fill_paletteer_d("nationalparkcolors::Acadia", 
+                         labels = c(clin_prop = "Clinical",
+                                 epi_prop = "Epi-Linked",
+                                 lab_prop = "Lab Confirmed"))
+```
+
