@@ -236,8 +236,8 @@ meta_df |>
 
 ```
 ```{r}
-#| label: table-detection-methods
-#| tbl-cap: "Table 2: Proportion of Measles Cases by Detection Method (2012–2025)"
+#| label: table-aqi-measles
+#| tbl-cap: "Table 3: Air Quality and Measles Burden by Country"
 
 summary_vars <- c("total_aqi", "measles_total", "measles_incidence_rate_per_1000000_total_population")
 
@@ -245,7 +245,6 @@ filtered_df <- meta_df %>%
   filter(!is.na(total_aqi), !is.na(measles_total), 
          !is.na(measles_incidence_rate_per_1000000_total_population))
 
-# use map to build a named list of summaries, then reduce to one dataframe
 country_summary <- summary_vars %>%
   map(~ filtered_df %>%
         group_by(country) %>%
@@ -286,7 +285,7 @@ country_summary %>%
   ) %>%
   data_color(
     columns = total_aqi,
-    palette = c("lightgreen", "lightblue", "skyblue", "dodgerblue"),
+    palette = c("lightgreen", "lightblue", "dodgerblue", "blue"),
     domain  = c(0, 200)
   ) %>%
   tab_style(
@@ -303,7 +302,8 @@ country_summary %>%
 ```
 
 ```{r}
-
+#| label: table-aqi-measles-quartile
+#| tbl-cap: "Table 4: Measles Burden by AQI Quartile"
 
 summarise_by_quartile <- function(df, var, n_tiles = 4) {
   
