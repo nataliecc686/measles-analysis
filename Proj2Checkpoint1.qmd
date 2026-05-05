@@ -407,7 +407,7 @@ aqi_model |>
 
 ## Column - Table, Value Boxes & Subset Tables {width="50%"}
 
-### Row - Table 5 {height="20%"}
+### Row - Table 5 {height="35%"}
 
 ::: {.card title="Table 5: Linear Regression Coefficients"}
 ```{r}
@@ -416,7 +416,6 @@ aqi_model |>
 ```
 
 ```{r}
-#| label: linear-regression-coefficent
 #| tbl-cap: "Table 5: Linear Regression coefficients for the association between measles cases and AQI"
 #| 
 aqi_model <- meta_df |>
@@ -458,39 +457,60 @@ wide_model |>
 
 ::: {.valuebox icon="calculator" color="info"}
 p-value = 0.547
-
-`r "TODO: format(p_value, digits = 4, scientific = TRUE)"`
 :::
 
 ::: {.valuebox icon="bar-chart" color="warning"}
 t-value = 0.603
-
-`r "TODO: round(t_value, 3)"`
 :::
 
 ::: {.valuebox icon="arrows-expand" color="secondary"}
 95% Confidence Interval: (-0.002, 0.004)
-
-`r "TODO: paste0('[', round(ci_low, 3), ', ', round(ci_high, 3), ']')"`
 :::
 
-### Row - AQI Subset Tables {height="65%"}
+### Row - AQI Subset Tables {height="35%"}
 
 ::: {.panel-tabset}
 
 ## Top 10 — Highest Avg AQI
 ```{r}
 #| label: rq2-top10-aqi
-#--code-- gt table of top 10 countries by average AQI using Table 3: AQI vs. Average Measles Cases (unhealthy air quality rating)
-
-
-
+aqi_model |>
+  arrange(desc(total_aqi)) |>
+  slice_head(n = 10) |>
+  gt() |>
+  tab_header(title = "Top 10 Countries by Highest Average AQI") |>
+  cols_label(
+    country = "Country",
+    total_aqi = "Average AQI",
+    avg_cases = "Avg Measles Cases",
+    log_avg_cases = "Log Avg Cases"
+  ) |>
+  fmt_number(columns = c(total_aqi, avg_cases, log_avg_cases), decimals = 2) |>
+  tab_style(
+    style = cell_fill(color = "#ffcccc"),
+    locations = cells_body()
+  )
 ```
 
 ## Bottom 10 — Lowest Avg AQI
 ```{r}
 #| label: rq2-bottom10-aqi
-#--code-- gt table of bottom 10 countries by average AQI using Table 3: AQI vs. Average Measles Cases (best air quality rating)
+aqi_model |>
+  arrange(total_aqi) |>
+  slice_head(n = 10) |>
+  gt() |>
+  tab_header(title = "Bottom 10 Countries by Lowest Average AQI") |>
+  cols_label(
+    country = "Country",
+    total_aqi = "Average AQI",
+    avg_cases = "Avg Measles Cases",
+    log_avg_cases = "Log Avg Cases"
+  ) |>
+  fmt_number(columns = c(total_aqi, avg_cases, log_avg_cases), decimals = 2) |>
+  tab_style(
+    style = cell_fill(color = "#ccffcc"),
+    locations = cells_body()
+  )
 ```
 
 :::
