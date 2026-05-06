@@ -381,7 +381,7 @@ The scatterplot shows a slight negative linear association between AQI and avera
 
 ```{r}
 #| label: linear-regression-coefficent
-#| tbl-cap: "Table 4: Linear Regression coefficients for the association between measles cases and AQI"
+#| tbl-cap: "A table showing the linear regression coefficients for the association between measles cases and AQI"
 #| 
 aqi_model <- meta_df |>
   filter(!is.na(total_aqi), !is.na(total_suspected_measles_rubella_cases)) |>
@@ -417,11 +417,11 @@ wide_model |>
 ```
 Based on the test statistic of 0.603 and large p-value (0.547 > 0.05), we have extremely weak evidence against the null hypothesis. We can conclude that there is no association between average measles cases and AQI. Also, because 0 is contained in the 95% confidence interval (-0.002 to 0.004), we cannot say that the true effect of AQI on measles cases is 0. There is no significant linear association between AQI and average measles cases after a log transformation. Future analysis could include an additional predictor such as GDP per capita to observe if there is a more meaningful conclusion that could have been drawn. 
 
-### Table 4: Measles Burden by AQI Quartile
+### Table 5: Measles Burden by AQI Quartile
 
 ```{r}
 #| label: table-aqi-measles-quartile
-#| tbl-cap: "Table 4: Measles Burden by AQI Quartile"
+#| tbl-cap: "A table showing the mean AQI for each AQI quartile and its corresponding total cases and mean incidence rate"
 
 summarise_by_quartile <- function(df, var, n_tiles = 4) {
   
@@ -472,7 +472,7 @@ Countries with low AQI (Q1) and countries with high AQI (Q4) have around a media
 ```{r}
 #| message: false
 #| warning: false
-#| fig-alt: "A ridgeline density plot showing the distribution of average annual measles cases across four Air Quality Index quartiles (Q1 low AQI through Q4 high AQI). All the four quantiles showed similar median case counts with around 500 cases. Q1 (low AQI) displays a bimodal distribution with two distinct peaks, while Q2, Q3, and Q4 show unimodal distributions. Because the curves were overlapping, it indicates that there is no strong relationship between AQI quartile and average measles case."
+#| fig-cap: "A ridgeline density plot showing the distribution of average annual measles cases across four Air Quality Index quartiles (Q1 low AQI through Q4 high AQI). All the four quantiles showed similar median case counts with around 500 cases. Q1 (low AQI) displays a bimodal distribution with two distinct peaks, while Q2, Q3, and Q4 show unimodal distributions. Because the curves were overlapping, it indicates that there is no strong relationship between AQI quartile and average measles case."
 aqi_model |>
   mutate(
     aqi_quartile = ntile(total_aqi, 4),
@@ -504,3 +504,4 @@ aqi_model |>
   theme(legend.position = "none")
 ```
 
+Our guess that AQI plays a role in the rise and fall of measles cases was wrong as there seems to be no significant difference between countries of different AQIs and their mean measles cases. 
